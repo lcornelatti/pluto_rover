@@ -42,13 +42,13 @@ public class Rover{
   //Handles case for moving to the front
   private static void move_front(){
     switch(direction){
-      case "North": y++;
+      case "North": y = (y + 1) % 100;
                     break;
-      case "South": y--;
+      case "South": y = (y - 1) % 100;
                     break;
-      case "East":  x++;
+      case "East":  x = (x + 1) % 100;
                     break;
-      case "West":  x--;
+      case "West":  x = (x - 1) % 100;
                     break;
     }
   }
@@ -56,13 +56,13 @@ public class Rover{
   //Handles case for moving backwards
   private static void move_back(){
     switch(direction){
-      case "North": y--;
+      case "North": y = (y - 1) % 100;
                     break;
-      case "South": y++;
+      case "South": y = (y + 1) % 100;;
                     break;
-      case "East":  x--;
+      case "East":  x = (x - 1) % 100;
                     break;
-      case "West":  x++;
+      case "West":  x = (x + 1) % 100;
                     break;
     }
   }
