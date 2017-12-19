@@ -130,7 +130,7 @@ public class Rover{
 
   //Simple method for obstacle detection (there are only obstacles at places where x and y are divisible by 5, except at the origin)
   private static boolean obstacleAt(int x, int y){
-    if (x % 5 == 0 && y && 5 == 0 && !(x == 0 && y == 0)) return true;
+    if (x % 5 == 0 && y % 5 == 0 && (x != 0 || y != 0)) return true;
     else return false;
   }
 }
