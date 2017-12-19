@@ -3,29 +3,95 @@ import java.io.*;
 
 public class Rover{
 
+  //Declare global output variables and gives them initial values
+  private static int x = 0;
+  private static int y = 0;
+  private static String direction = "North";
+
   public static void main(String[] args){
+
     Scanner scanner = new Scanner(System.in);
 
-    while (true){
-      System.out.println("Where should I go?");
-      String input_string = scanner.nextLine();
+    while (true){ //Main program loop
 
-      for (int i = 0; i < input_string.length(); i++){ //Iterates for every character in the String
+      //Takes input from user and converts it to upper case string
+      System.out.println("Current position is ("+ x + ", " + y + "), direction is " + direction + ". Where should I go?");
+      String input_string = scanner.nextLine().toUpperCase();
+
+      //Iterates for every character in the String
+      for (int i = 0; i < input_string.length(); i++){
+
         char current_char = input_string.charAt(i);
 
         switch(current_char){
-          case 'F': System.out.println("Char is F");
+          case 'F': move_front();
                     break;
-          case 'B': System.out.println("Char is B");
+          case 'B': move_back();
                     break;
-          case 'R': System.out.println("Char is R");
+          case 'R': turn_right();
                     break;
-          case 'L': System.out.println("Char is L");
+          case 'L': turn_left();
                     break;
           default:  System.out.println("Unrecognized input");
                     break;
         }
       }
+    }
+  }
+
+  //Handles case for moving to the front
+  private static void move_front(){
+    switch(direction){
+      case "North": y++;
+                    break;
+      case "South": y--;
+                    break;
+      case "East":  x++;
+                    break;
+      case "West":  x--;
+                    break;
+    }
+  }
+
+  //Handles case for moving backwards
+  private static void move_back(){
+    switch(direction){
+      case "North": y--;
+                    break;
+      case "South": y++;
+                    break;
+      case "East":  x--;
+                    break;
+      case "West":  x++;
+                    break;
+    }
+  }
+
+  //Handles case for turning right
+  private static void turn_right(){
+    switch(direction){
+      case "North": direction = "East";
+                    break;
+      case "South": direction = "West";
+                    break;
+      case "East":  direction = "South";
+                    break;
+      case "West":  direction = "North";
+                    break;
+    }
+  }
+
+  //Handles case for turning left
+  private static void turn_left(){
+    switch(direction){
+      case "North": direction = "West";
+                    break;
+      case "South": direction = "East";
+                    break;
+      case "East":  direction = "North";
+                    break;
+      case "West":  direction = "South";
+                    break;
     }
   }
 }
