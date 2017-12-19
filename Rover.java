@@ -6,6 +6,8 @@ public class Rover{
   //Declare global output variables and gives them initial values
   private static int x = 0;
   private static int y = 0;
+  private static int obstacleX = 0;
+  private static int obstacleY = 0;
   private static String direction = "North";
 
   public static void main(String[] args){
@@ -17,6 +19,7 @@ public class Rover{
       //Takes input from user and converts it to upper case string
       System.out.println("Current position is ("+ x + ", " + y + "), direction is " + direction + ". Where should I go?");
       String input_string = scanner.nextLine().toUpperCase();
+      boolean obstacle_found = false;
 
       //Iterates for every character in the String
       for (int i = 0; i < input_string.length(); i++){
@@ -24,9 +27,9 @@ public class Rover{
         char current_char = input_string.charAt(i);
 
         switch(current_char){
-          case 'F': move_front();
+          case 'F': if (!move_front()) obstacle_found = true;
                     break;
-          case 'B': move_back();
+          case 'B': if (!move_back()) obstacle_found = true;
                     break;
           case 'R': turn_right();
                     break;
@@ -35,35 +38,64 @@ public class Rover{
           default:  System.out.println("Unrecognized input " + current_char + " . Character ignored");
                     break;
         }
+
+        if (obstacle_found){ //If an obstacle is found, the loop breaks and the rover notifies its stopping
+          System.out.println("Obstacle found at (" + obstacleX + ", " + obstacleY + "). Rover stopped");
+          break;
+        }
       }
     }
   }
 
   //Handles case for moving to the front
-  private static void move_front(){
+  private static boolean move_front(){
+    int targetX = x;
+    int targetY = y;
     switch(direction){
-      case "North": y = (y + 1) % 100;
+      case "North": targetY = (y + 1) % 100;
                     break;
-      case "South": y = (y == 0)? 99 : y - 1;
+      case "South": targetY = (y == 0)? 99 : y - 1;
                     break;
-      case "East":  x = (x + 1) % 100;
+      case "East":  targetX = (x + 1) % 100;
                     break;
-      case "West":  x = (x == 0)? 99 : x - 1;
+      case "West":  targetX = (x == 0)? 99 : x - 1;
                     break;
+    }
+    if (obstacleAt(targetX, targetY)) {
+      obstacleX = targetX;
+      obstacleY = targetY;
+      return false;
+    }
+    else {
+      x = targetX;
+      y = targetY;
+      return true;
     }
   }
 
   //Handles case for moving backwards
-  private static void move_back(){
+  private static boolean move_back(){
+    int targetX = x;
+    int targetY = y;
     switch(direction){
-      case "North": y = (y == 0)? 99 : y - 1;
+      case "North": targetY = (y == 0)? 99 : y - 1;
                     break;
-      case "South": y = (y + 1) % 100;;
+      case "South": targetY = (y + 1) % 100;
                     break;
-      case "East":  x = (x == 0)? 99 : x - 1;
+      case "East":  targetX = (x == 0)? 99 : x - 1;
                     break;
-      case "West":  x = (x + 1) % 100;
+      case "West":  targetX = (x + 1) % 100;
                     break;
+    }
+    if (obstacleAt(targetX, targetY)) {
+      obstacleX = targetX;
+      obstacleY = targetY;
+      return false;
+    }
+    else {
+      x = targetX;
+      y = targetY;
+      return true;
     }
   }
 
@@ -93,5 +125,11 @@ public class Rover{
       case "West":  direction = "South";
                     break;
     }
+  }
+
+  //Simple method for obstacle detection (so far only one hardcoded obstacle)
+  private static boolean obstacleAt(int x, int y){
+    if (x == 1 && y == 4) return true;
+    else return false;
   }
 }
