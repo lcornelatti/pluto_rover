@@ -12,6 +12,7 @@ public class Rover{
 
   public static void main(String[] args){
 
+    //Scanner for user input
     Scanner scanner = new Scanner(System.in);
 
     while (true){ //Main program loop
@@ -127,9 +128,9 @@ public class Rover{
     }
   }
 
-  //Simple method for obstacle detection (so far only one hardcoded obstacle)
+  //Simple method for obstacle detection (there are only obstacles at places where x and y are divisible by 5, except at the origin)
   private static boolean obstacleAt(int x, int y){
-    if (x == 1 && y == 4) return true;
+    if (x % 5 == 0 && y && 5 == 0 && !(x == 0 && y == 0)) return true;
     else return false;
   }
 }
