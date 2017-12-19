@@ -32,7 +32,7 @@ public class Rover{
                     break;
           case 'L': turn_left();
                     break;
-          default:  System.out.println("Unrecognized input");
+          default:  System.out.println("Unrecognized input " + current_char + " . Character ignored");
                     break;
         }
       }
